@@ -14,7 +14,7 @@ module CoursesHelper
 	end
 
 
-	def results(dept, course_num)
+	def live_data(dept, course_num)
 		data = []
 		ccns = []
 		num = course_num
@@ -32,19 +32,22 @@ module CoursesHelper
 			end
 		end
 
-		sections = []
-		data.each_slice(11) do |section|
-			sections << section
+		info = []
+		titles = ['Name', 'Time', 'CCN', 'Enrolled', 'Waitlist']
+		data.each_slice(11).zip(ccns) do |section, lookup_ccn|
+			name = section[0].split(' ')[-2,2].join(' ')
+			ccn = section[5]
+			time_place = section[2].split(',')
+			time = time_place[0].strip()
+			enrolled, waitlist = schedule(lookup_ccn)
+			info << [name, time, ccn, enrolled, waitlist]
 		end
 		# sections contains a list per section:
 		# [course, coursetitle, location, instructor, status, ccn, units, 
 		#  finalgroup, restrictions, note]
 
-		puts ['Section', 'Enrolled', 'Waitlist'].map{|x| x.ljust(10)}.join('')
-		sections.zip(ccns).each do |section, ccn|
-			name = section[0].split(' ')[-2,2].join(' ')
-			e, w = schedule(ccn)
-			puts [name, e, w].map{|x| x.ljust(10)}.join('')
-		end
+		#puts ['Section', 'Enrolled', 'Waitlist'].map{|x| x.ljust(10)}.join('')
+		return titles, info
 	end
+	
 end

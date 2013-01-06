@@ -1,0 +1,12 @@
+%h1= @course
+%table
+  %tbody
+    %tr
+    - @title.each do |name|
+      %th= name
+    - @info.each do |row|
+      %tr
+        - row.each do |column|
+          %td= column
+
+= link_to 'New search', root_path

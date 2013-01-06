@@ -2,7 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.9'
 gem 'bootstrap-sass', '2.1'
-
+gem 'nokogiri'
+gem 'haml'
 
 group :development, :test do
 	gem 'sqlite3', '1.3.5'
@@ -10,7 +11,7 @@ group :development, :test do
   gem 'guard-rspec', '1.2.1'
   gem 'guard-spork', '1.2.0'
   gem 'spork', '0.9.2'
-
+  gem 'haml-rails'
 
 end
 

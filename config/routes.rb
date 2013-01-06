@@ -1,5 +1,6 @@
 Website::Application.routes.draw do
-  get "courses/home"
+  root to: 'courses#home'
+
   get "courses/results"
 
   # The priority is based upon order of creation:
