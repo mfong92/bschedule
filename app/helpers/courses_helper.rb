@@ -17,6 +17,7 @@ module CoursesHelper
 	def live_data(dept, course_num)
 		data = []
 		ccns = []
+		dept.gsub! /\s/, '+'
 		num = course_num
 		class_url = 'https://osoc.berkeley.edu/OSOC/osoc?y=0&p_term=SP&p_deptname=--+Choose+a+Department+Name+--&p_classif=--+Choose+a+Course+Classification+--&p_presuf=--+Choose+a+Course+Prefix%2fSuffix+--&p_course=' + num + '&p_dept=' + dept + '&x=0'
 		doc = open(class_url).read
