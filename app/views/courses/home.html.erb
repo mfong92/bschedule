@@ -1,9 +1,14 @@
-<h1>Search</h1>
+<h1>bschedule</h1>
 
+<br>
+<br>
 <%= form_tag("/courses/results", :method => "get") do %>
   <%= label_tag(:dept, "Department:") %>
   <%= text_field_tag(:dept) %>
   <%= label_tag(:course_num, "Course Number:") %>
   <%= text_field_tag(:course_num) %>
+  <br>
+  <br>
+  
   <%= submit_tag("Search") %>
 <% end %>
