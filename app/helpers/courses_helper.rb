@@ -60,7 +60,7 @@ module CoursesHelper
 			info << [name, ccn, time, enrolled, waitlist]
 		end
 
-		return titles, info
+		return titles, info, class_url
 	end
 	
 end

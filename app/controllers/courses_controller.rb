@@ -6,6 +6,6 @@ class CoursesController < ApplicationController
 
   def results
     @course = params[:dept] + " " + params[:course_num]
-  	@title, @info = live_data(params[:dept], params[:course_num])
+  	@title, @info, @url = live_data(params[:dept], params[:course_num])
   end
 end
