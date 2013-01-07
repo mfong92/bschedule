@@ -1,11 +1,14 @@
 class CoursesController < ApplicationController
 
   def home
-  	params[:dept]
   end
 
   def results
-    @course = params[:dept] + " " + params[:course_num]
-  	@title, @info, @url = live_data(params[:dept], params[:course_num])
+    if (params[:dept_num])
+      params[:course_num] = params[:dept_num].split.last
+      params[:dept] = params[:dept_num].split[0..-2].join(" ")
+    end
+    @course = params[:dept].strip + " " + params[:course_num].strip
+  	@title, @info, @url = live_data(params[:dept].strip, params[:course_num].strip)
   end
 end

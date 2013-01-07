@@ -18,24 +18,39 @@ table {
 	margin-right:auto;
 }
 
-nav {
-	margin-bottom:5%;
+header {
+	margin-top: 10px;
+	margin-bottom:10%;
 }
 
-search {
-	right: 100px;
-}
+.search {
+	margin-right:100px;
 
-search {
-	font-size:1.05em;
-	font-family: Arial;
+
 }
 
 button {
 	height: 27px;
+	position: relative;
+	top: -5px;
 }
 
-button.i {
-	right: 11px;
+
+#logo {
+
+  float: left;
+  font-size: 1.7em;
+  color: #000;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+  line-height: 1;
+  position: relative;
+  width: -50%;
+  margin-left: 100px;
+  top: -7px;
 }
 
+button{
+	float: right;
+}
