@@ -1,3 +1,7 @@
+
+
+
+
 module CoursesHelper
 
 	def schedule(ccn, stats)
@@ -18,12 +22,45 @@ module CoursesHelper
 	end
 
 
-	def live_data(dept, num)
+	def live_data(params)
 		require 'thread/pool'
 		require 'open-uri'
-		dept.gsub! /\s/, '+'
 
-		class_url = 'https://osoc.berkeley.edu/OSOC/osoc?y=0&p_term=SP&p_deptname=--+Choose+a+Department+Name+--&p_classif=--+Choose+a+Course+Classification+--&p_presuf=--+Choose+a+Course+Prefix%2fSuffix+--&p_course=' + num + '&p_dept=' + dept + '&x=0'
+		course = ""
+		
+
+		if params[:course]
+     		dept = (params[:course])[/^[^0-9]+/]
+          	num = (params[:course])[/\d+\w*/]
+          	if dept.nil?
+     			dept = ''
+    		end
+    		if num.nil?
+      			num = ''
+    		end
+    		dept = dept.strip.upcase
+   			num = num.strip.upcase
+   			course = (dept + " " + num).strip
+
+     		dept.gsub! /\s/, '+'
+          	class_url = 'https://osoc.berkeley.edu/OSOC/osoc?y=0&p_term=SP&p_deptname=--+Choose+a+Department+Name+--&p_classif=--+Choose+a+Course+Classification+--&p_presuf=--+Choose+a+Course+Prefix%2fSuffix+--&p_course=' + num + '&p_dept=' + dept + '&x=0'
+
+
+    	else
+    		dept = params[:dept].strip.upcase
+    		num = params[:course_num].strip.upcase
+    	    course = (dept + " " + num).strip
+
+    		params[:dept].gsub! /\s/, '+'
+    		class_url = 'http://osoc.berkeley.edu/OSOC/osoc?y=0&p_ccn=' + params[:ccn] + '&p_units=' + params[:units] + '&p_term=SP&p_bldg=' + params[:building] + '&p_exam=' + params[:final] + '&p_deptname=--+Choose+a+Department+Name+--&p_hour=' + params[:hours] + '&p_classif=--+Choose+a+Course+Classification+--&p_restr=' + params[:restrictions] + '&p_info=' + params[:additional] + '&p_presuf=--+Choose+a+Course+Prefix%2fSuffix+--&p_course=' + params[:course_num] + '&p_title=' + params[:course_title] +'&p_updt=' + params[:status] +'&p_day=' + params[:days] + '&p_instr=' + params[:instructor] + '&p_dept='  + params[:dept] + '&x=0'
+
+    	end
+
+    	if dept == '' and num == ''
+    		course = 'RESULTS'
+    	end
+
+
 		doc = open(class_url).read
 		ccn_regex = Regexp.new(/input type="hidden" name="_InField2" value="([0-9]*)"/)
 		ccns = []
@@ -60,7 +97,7 @@ module CoursesHelper
 			info << [name, ccn, time, enrolled, waitlist]
 		end
 
-		return titles, info, class_url
+		return titles, info, class_url, course
 	end
 	
 end

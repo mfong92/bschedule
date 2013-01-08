@@ -1,0 +1,97 @@
+<br>
+<br>
+<form class="center" action = "/courses/results" method = "get">
+	Department:
+	  <input id="dept" class="input search center" name="dept" type="text" placeholder = "ex: CHEM, POL SCI, MCELLBI" class="search-query span3">
+	<br>
+	<br>
+	Course number:
+	<input id="course_num" class="input search" name="course_num" type="text" placeholder = "ex: 1A, H7A, 103, 25AC" class="search-query span3">
+	<br>
+	<br>
+	Course title keyword:
+	<input id="course_title" class="input search" name="course_title" type="text" placeholder = "ex: CALIF, DATABASE, ENVIRON" class="search-query span3">
+	<br>
+	<br>
+	Instructor:
+	<input id="instructor" class="input search" name="instructor" type="text" placeholder = "ex: SMITH, GREEN" class="search-query span3">
+	<br>
+	<br>
+	Final exam group:
+	<input id="final" class="input search" name="final" type="text" placeholder = "ex: 7, 22, NONE, TBA" class="search-query span3">	
+	<br>
+	<br>
+	Course control number:
+	<input id="ccn" class="input search" name="ccn" type="text" placeholder = "ex: 00507, 12345, psych166ac" class="search-query span3">	
+	<br>
+	<br>
+	Day(s) of the week:
+	<input id="days" class="input search" name="days" type="text" placeholder = "ex: M, TuTh, MTWTF" class="search-query span3">	
+	<br>
+	<br>
+	Hour(s):
+	<input id="hours" class="input search" name="hours" type="text" placeholder = "ex: 930-11, 10, 2-5" class="search-query span3">	
+	<br>
+	<br>
+	Building:
+	<input id="building" class="input search" name="building" type="text" placeholder = "ex: DWINELLE, GPB, NORTH GATE" class="search-query span3">	
+	<br>
+	<br>
+	Unit(s):
+	<input id="units" class="input search" name="units" type="text" placeholder = "ex: 2, .5, 1-10" class="search-query span3">	
+	<br>
+	<br>
+	Restrictions:
+	<input id="restrictions" class="input search" name="restrictions" type="text" placeholder = "ex: NONE, FR, GR" class="search-query span3">	
+	<br>
+	<br>
+	Additional:
+	<input id="additional" class="input search" name="additional" type="text" placeholder = "ex: AMERICAN CULTURES" class="search-query span3">	
+	<br>
+	<br>
+	Status:
+	<input id="status" class="input search" name="status" type="text" placeholder = "ex: UPDATED, ADDED" class="search-query span3">	
+	<br>
+	<br>
+	    <%= submit_tag("Submit") %>
+
+</form>
+</advanced>
+  <br>
+  <br>
+  
+
+ <!--
+ 
+<%= form_tag("/courses/results", :method => "get") do %>
+  <%= label_tag(:dept, "Department:") %>
+  <%= text_field_tag(:dept) %>
+  <%= label_tag(:course_num, "Course Number:") %>
+  <%= text_field_tag(:course_num) %>
+    <%= label_tag(:course_title, "Course Title Keyword:") %>
+  <%= text_field_tag(:course_title) %>
+    <%= label_tag(:instructor, "Instructor:") %>
+  <%= text_field_tag(:instructor) %>
+    <%= label_tag(:final, "Final Exam Group:") %>
+  <%= text_field_tag(:final) %>
+    <%= label_tag(:ccn, "Course Control Number:") %>
+  <%= text_field_tag(:ccn) %>
+    <%= label_tag(:days, "Day(s) of the Week:") %>
+  <%= text_field_tag(:days) %>
+    <%= label_tag(:hours, "Hour(s):") %>
+  <%= text_field_tag(:hours) %>
+    <%= label_tag(:buildings, "Building:") %>
+  <%= text_field_tag(:buildings) %>
+    <%= label_tag(:units, "Units:") %>
+  <%= text_field_tag(:units) %>
+    <%= label_tag(:restrictions, "Restrictions:") %>
+  <%= text_field_tag(:restrictions) %>
+    <%= label_tag(:additional, "Additional Info:") %>
+  <%= text_field_tag(:additional) %>
+    <%= label_tag(:status, "Status/Last Changed:") %>
+  <%= text_field_tag(:status) %>
+  <br>
+    <%= submit_tag("Submit") %>
+
+  <%end%>
+-->
