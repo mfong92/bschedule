@@ -1,6 +1,4 @@
-
-<br>
-<br>
+<!--
 <%= form_tag("/courses/results", :method => "get") do %>
   <%= label_tag(:dept, "Department:") %>
   <%= text_field_tag(:dept) %>
@@ -10,4 +8,10 @@
   <br>
   
   <%= submit_tag("Submit") %>
+-->
+</br></br></br></br></br></br></br></br></br></br>
+<div id="hometitle">bSchedule</div>
+<form class="center" action = "/courses/results" method = "get">
+	  <input id="dept_num" class="input-xlarge search-query" name="course" type="text" placeholder = "ex: bio eng 144, cs 188, psych166ac" class="search-query span3">
+</form>
 <% end %>

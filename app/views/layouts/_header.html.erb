@@ -1,13 +1,17 @@
 <header>
-	<form class="navbar center " action = "/courses/results" method = "get">
-  	   	<div class=" pull-left">
-      		<%= link_to "bschedule", root_path, id: "logo" %>
-    	</div>
-		<div class = "search pull-right">
-  			<input id="dept_num" name="dept_num" type="text" placeholder = "ex. bio eng 144, cs 188" class="search-query span9">
-			<button type = "submit" class="btn btn-small active" id = "submit"  />
-				<i class="icon-white icon-search pull-right"></i>
- 			</button>
-		</div>  
-	</form>
+	<div class="<%= 'hidden' if current_page?(root_path) %>">
+		<div class="navbar">
+			<div class=" pull-left">
+				<%= link_to "bSchedule", root_path, id: "logo" %>
+			</div>
+			<form class="navbar" action = "/courses/results" method = "get">
+				<div class = "search pull-right">
+					  			<input id="dept_num" name="course" type="text" placeholder = "quick search..." class="search-query span9">
+					<button type = "submit" class="btn btn-small active" id = "submit">
+						<i class="icon-white icon-search pull-right"></i>
+					</button>
+				</div>  
+			</form>
+		</div>
+	</div>
 </header>

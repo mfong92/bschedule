@@ -4,11 +4,25 @@ class CoursesController < ApplicationController
   end
 
   def results
-    if (params[:dept_num])
-      params[:course_num] = params[:dept_num].split.last
-      params[:dept] = params[:dept_num].split[0..-2].join(" ")
+    if (params[:course])
+      dept = (params[:course])[/^[^0-9]+/]
+      num = (params[:course])[/\d+\w*/]
+    else
+      dept = params[:dept]
+      num = params[:course_num]
     end
-    @course = params[:dept].strip + " " + params[:course_num].strip
-  	@title, @info, @url = live_data(params[:dept].strip, params[:course_num].strip)
+
+    if dept.nil?
+      dept = ''
+    end
+    if num.nil?
+      num = ''
+    end
+    dept = dept.strip.upcase
+    num = num.strip.upcase
+
+    @course = (dept + " " + num).strip
+    @title, @info, @url = live_data(dept, num)
+
   end
 end
