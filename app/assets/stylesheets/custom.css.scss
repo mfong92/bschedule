@@ -1,39 +1,51 @@
 @import "bootstrap";
 
-th, td {
-    overflow: hidden;
-    width: 100px;
-    text-align: center;
-}
-
 body {
-	text-align:center;
-  background-color: #ffdd77;
-}
-
-table {
-	margin-left:auto;
-	margin-right:auto;
+  background-color: #ffe187;
 }
 
 header {
-	margin-top: 10px;
+  margin-top: 10px;
 }
 
 button {
-	height: 27px;
-	position: relative;
-	top: -5px;
+  height: 27px;
+  position: relative;
+  top: -5px;
 }
 
-center{
+table {
+  margin-right: auto;
+}
+
+th, td {
+    overflow: hidden;
+    text-align: left;
+    padding-right: 20px;
+}
+
+table {
+  border-spacing:20;
+  border-collapse:collapse;
+}
+
+h5 {
+  margin-bottom:-10px;
+}
+
+hr {
+  border-color: #ecb520;
+  margin-left: 50px;
+}
+
+center {
   text-align:center;
 }
 
 #logo {
   float: left;
   font-size: 1.7em;
-  color: #006acc;
+  color: #0070ca;
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
@@ -67,3 +79,17 @@ a:link {
   color: #0099ee;
 }
 
+.offset08 {
+  margin-left: 50px;
+}
+
+.center {
+  float: center;
+}
+
+.span4 {
+  margin-right: 50px;
+}
+
+.dl {
+}

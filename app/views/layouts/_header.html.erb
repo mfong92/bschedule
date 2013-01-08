@@ -1,13 +1,13 @@
 <header>
 	<div class="<%= 'hidden' if current_page?(root_path) %>">
 		<div class="navbar">
-			<div class=" pull-left">
+			<div class="pull-left">
 				<%= link_to "bSchedule", root_path, id: "logo" %>
 			</div>
-			<form class="navbar" action = "/courses/results" method = "get">
-				<div class = "search pull-right">
-					  			<input id="dept_num" name="course" type="text" placeholder = "quick search..." class="search-query span9">
-					<button type = "submit" class="btn btn-small active" id = "submit">
+			<form class="navbar" action="/courses/results" method="get">
+				<div class="search pull-right">
+					<input id="dept_num" name="course" type="text" placeholder="quick search..." class="search-query input-medium">
+					<button type="submit" class="btn btn-small active" id="submit">
 						<i class="icon-white icon-search pull-right"></i>
 					</button>
 				</div>  

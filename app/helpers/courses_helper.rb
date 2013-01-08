@@ -1,7 +1,3 @@
-
-
-
-
 module CoursesHelper
 
 	def schedule(ccn, stats)
@@ -27,7 +23,6 @@ module CoursesHelper
 		require 'open-uri'
 
 		course = ""
-		
 
 		if params[:course]
      		dept = (params[:course])[/^[^0-9]+/]
@@ -60,44 +55,107 @@ module CoursesHelper
     		course = 'RESULTS'
     	end
 
-
 		doc = open(class_url).read
-		ccn_regex = Regexp.new(/input type="hidden" name="_InField2" value="([0-9]*)"/)
-		ccns = []
-		doc.scan(ccn_regex).each do |ccn|
-			ccns << ccn[0]
-		end
-
-		stats = Hash.new
-		pool = Thread::Pool.new(15)
-		ccns.each do |lookup_ccn|
-			pool.process {
-				schedule(lookup_ccn, stats)
-			}
-			#sleep 0.05
-		end
-		pool.shutdown
-
-		data = []
+		
+		html_sections = []
+		temp_lines = []
 		doc.each_line do |line|
-			if line.include?(':&#160;')
-				raw = line.scan(Regexp.new(/>([^<]+)/))
-				data << raw[1][0].strip().split(':&#160;')[0]
+			if line.include?('<TABLE BORDER=0 CELLSPACING=2 CELLPADDING=0>')
+				if not temp_lines.empty?
+					html_sections << temp_lines
+					temp_lines = []
+				end
+				temp_lines << line
+			else
+				if not temp_lines.empty?
+					temp_lines << line
+				end
+			end
+		end
+		html_sections << temp_lines
+		
+		sections = []
+		ccn_regex = Regexp.new(/input type="hidden" name="_InField2" value="([0-9]*)"/)
+		html_sections.each do |section_lines|
+			data = []
+			lookup_ccn = -1
+			section_lines.each do |line|
+				if line.include?(':&#160;')
+					raw = line.scan(Regexp.new(/>([^<]+)/))
+					data << raw[1][0].strip()[/[^&]*/]
+				end
+				match = line.match(ccn_regex)
+				if match
+					lookup_ccn = match.captures[0]
+				end
+			end
+			if lookup_ccn != -1
+				data << lookup_ccn
+				sections << data
 			end
 		end
 
-		info = []
-		titles = ['Name', 'CCN', 'Time', 'Enrolled', 'Waitlist']
-		data.each_slice(11).zip(ccns) do |section, lookup_ccn|
-			name = section[0].split(' ')[-2,2].join(' ')
-			ccn = section[5]
-			time_place = section[2].split(',')
-			time = time_place[0].strip()
+		pool = Thread::Pool.new(30)
+		stats = Hash.new
+		sections.each do |section|
+			lookup_ccn = section.last
+			pool.process {
+				schedule(lookup_ccn, stats)
+			}
+		end
+		pool.shutdown
+
+		sections.each do |section|
+			lookup_ccn = section.pop
 			enrolled, waitlist = stats[lookup_ccn]
-			info << [name, ccn, time, enrolled, waitlist]
+			section << enrolled << waitlist
 		end
 
-		return titles, info, class_url, course
+		lectures = []
+		lec = []
+		secs = []
+		sections.each do |section|
+			name = section[0]
+			if not name.include?('DIS') and not name.include?('LAB')
+				if not lec.empty?
+					lec << secs
+					lectures << lec
+				end
+				secs = []
+				lec = section
+			else 
+				secs << section
+			end
+		end
+		lec << secs
+		lectures << lec
+		
+		lec_titles = ['Course', 'Title', 'Location', 'Instructor', 'Status', 'CCN', 'Units', 'Final', 'Restrictions', 'Note', 'Current', 'Enrolled', 'Waitlist']
+		section_titles = lec_titles.dup
+
+		lec_indices = [10, 9, 8, 4]
+		sec_indices = [10, 9, 8, 7, 6, 4, 3, 1]
+		lectures.each do |lec|
+			lec_indices.each do |i|
+				lec.delete_at(i)
+			end
+			sections = lec.last
+			sections.each do |section|
+				sec_indices.each do |j|
+					section.delete_at(j)
+				end
+				section[0] = section[0].split(' ')[-2,2].join(' ')
+			end
+		end
+
+		lec_indices.each do |i|
+			lec_titles.delete_at(i)
+		end
+		sec_indices.each do |j|
+			section_titles.delete_at(j)
+		end
+
+		return lectures, lec_titles, section_titles, class_url, course
 	end
 	
 end

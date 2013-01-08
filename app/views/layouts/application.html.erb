@@ -6,14 +6,10 @@
 	<%= javascript_include_tag "application" %>
 	<%= csrf_meta_tags %>
 </head>
-
-<div class = "row-fluid">
-	<%= render 'layouts/header' %>
-</div>
-
 <body>
-	<span12>
+	<%= render 'layouts/header' %>
+	<div class='container'>
 		<%= yield %>
-	</span>
+	</div>
 </body>
 </html>

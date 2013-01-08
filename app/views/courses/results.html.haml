@@ -1,13 +1,28 @@
-%h1
-  #{ link_to @course, @url}
-%table
-  %tbody
-    %tr
-    - @title.each do |name|
-      %th= name
-    - @info.each do |row|
-      %tr
-        - row.each do |column|
-          %td= column
+.row
+	.span11.offset08
+		%h1 #{link_to @course, @url}
+
+- @lectures.each do |lecture|
+	- sections = lecture.pop
+	.row
+		.span4.offset08
+			.dl{:class => 'dl-horizontal'}
+				- lecture.zip(@lec_titles).each do |field, desc|
+					%dt= desc
+					%dd= field
+		.span7
+			%table
+				%tbody
+					%tr
+						- @sec_titles.each do |title|
+							%th= title
+					- sections.each do |section|
+						%tr
+							- section.each do |cell|
+								%td= cell
+	- if lecture != @lectures.last
+		.row
+			%hr
+%br
 %br
 %br
