@@ -1,28 +1,35 @@
 .row
 	.span11.offset08
-		%h1 #{link_to @course, @url}
+		%center #{link_to @course, @url}
 
-- @lectures.each do |lecture|
-	- sections = lecture.pop
+- if @lectures[0][0] == []
 	.row
-		.span4.offset08
-			.dl{:class => 'dl-horizontal'}
-				- lecture.zip(@lec_titles).each do |field, desc|
-					%dt= desc
-					%dd= field
-		.span7
-			%table
-				%tbody
-					%tr
-						- @sec_titles.each do |title|
-							%th= title
-					- sections.each do |section|
-						%tr
-							- section.each do |cell|
-								%td= cell
-	- if lecture != @lectures.last
+		.span11.offset08
+			%p No classes match your request. 
+			%p Please note that this is a Spring 2013 search. Click the link above for more details
+
+- else
+	- @lectures.each do |lecture|
+		- sections = lecture.pop
 		.row
-			%hr
-%br
-%br
-%br
+			.span4.offset08
+				.dl{:class => 'dl-horizontal'}
+					- lecture.zip(@lec_titles).each do |field, desc|
+						%dt= desc
+						%dd= field
+			.span7
+				%table
+					%tbody
+						%tr
+							- @sec_titles.each do |title|
+								%th= title
+						- sections.each do |section|
+							%tr
+								- section.each do |cell|
+									%td= cell
+		- if lecture != @lectures.last
+			.row
+				%hr
+	%br
+	%br
+	%br
