@@ -1,7 +1,10 @@
 @import "bootstrap";
+@import url("http://fonts.googleapis.com/css?family=Quicksand");
 
 body {
   background-color: #ffe187;
+  font-family: 'Calibri';
+  font-size: 0.9em;
 }
 
 header {
@@ -86,7 +89,7 @@ a:link {
 }
 
 .offset08 {
-  margin-left: 50px;
+  margin-left: 70px;
   margin-top: 3px;
 }
 
@@ -99,7 +102,7 @@ a:link {
 }
 
 .span7 {
-  width: 560px;
+  width: 530px;
 }
 
 .dl {
