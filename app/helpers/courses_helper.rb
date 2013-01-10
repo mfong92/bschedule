@@ -132,6 +132,7 @@ module CoursesHelper
 		
 		lec_titles = ['Course', 'Title', 'Location', 'Instructor', 'Status', 'CCN', 'Units', 'Final', 'Restrictions', 'Note', 'Current', 'Enrolled', 'Waitlist']
 		section_titles = lec_titles.dup
+		section_titles[0] = 'Section'
 
 		lec_indices = [10, 9, 8, 4]
 		sec_indices = [10, 9, 8, 7, 6, 4, 3, 1]
