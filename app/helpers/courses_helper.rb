@@ -136,15 +136,20 @@ module CoursesHelper
 		lec_indices = [10, 9, 8, 4]
 		sec_indices = [10, 9, 8, 7, 6, 4, 3, 1]
 		lectures.each do |lec|
+			if lec[7]
+				lec[7] = lec[7].split(':').last.strip
+			end
 			lec_indices.each do |i|
 				lec.delete_at(i)
 			end
 			sections = lec.last
 			sections.each do |section|
+
 				sec_indices.each do |j|
 					section.delete_at(j)
 				end
 				section[0] = section[0].split(' ')[-2,2].join(' ')
+
 			end
 		end
 
