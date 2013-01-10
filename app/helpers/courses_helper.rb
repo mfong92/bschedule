@@ -82,11 +82,7 @@ module CoursesHelper
 			section_lines.each do |line|
 				if line.include?(':&#160;')
 					raw = line.scan(Regexp.new(/>([^<]+)/))
-					temp = raw[1][0][/[^:]*/].split().join(' ')
-					if temp.include?('&nbsp')
-						temp = temp[/[^&]*/]
-					end
-					data << temp
+					data << (raw[1][0].split.join(' ') + ' ').split('&nbsp')[0].split('&#')[0]
 				end
 				match = line.match(ccn_regex)
 				if match
