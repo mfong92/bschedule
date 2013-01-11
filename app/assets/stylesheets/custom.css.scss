@@ -30,11 +30,16 @@ th, td {
 table {
   border-spacing:20;
   border-collapse:collapse;
+  margin-top: 8px;
 }
 
 hr {
   border-color: #ecb520;
   margin-left: 50px;
+}
+
+h4 {
+  font-size: 1.2em;
 }
 
 center {
@@ -88,5 +93,22 @@ a:link {
   float: center;
 }
 
-.dl {
+.section {
+  width: 30px;
 }
+.time {
+  width: 100px;
+}
+.place {
+  width: 130px;
+}
+.ccn {
+  width: 45px;
+}
+.enrolled {
+  width: 50px;
+}
+.waitlist {
+  width: 50px;
+}
+

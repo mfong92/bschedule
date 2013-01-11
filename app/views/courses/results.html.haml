@@ -13,8 +13,7 @@
 		- lec = @info[lecture[0]]
 		.row
 			.span3.offset1
-				- title_words = lec[:course].split
-				%h4= title_words[0, title_words.length-3].join(' ')
+				%h4= lec[:course].split[0...-3].join(' ')
 				%h5= lec[:title]
 				%p=  lec[:instructor]
 				%p=  'Units: ' + lec[:units]
@@ -24,19 +23,19 @@
 						%tr
 							%th= 'Section'
 							%th= 'Time'
-							%th= 'Location'
+							%th= 'Place'
 							%th= 'CCN'
 							%th= 'Enrolled'
 							%th= 'Waitlist'
 							- lecture.each do |section|
 								- sec = @info[section]
 								%tr
-									%td= sec[:course].split[-2,2].join(' ')
-									%td= sec[:time]
-									%td= sec[:place]
-									%td= sec[:ccn]
-									%td= sec[:enrolled]
-									%td= sec[:waitlist]
+									%td{:class => 'course'}= sec[:course].split[-2,2].join(' ')
+									%td{:class => 'time'}= sec[:time]
+									%td{:class => 'place'}= sec[:place]
+									%td{:class => 'ccn'}= sec[:ccn]
+									%td{:class => 'enrolled'}= sec[:enrolled]
+									%td{:class => 'waitlist'}= sec[:waitlist]
 		- if lecture != @lectures.last
 			.row
 				%hr

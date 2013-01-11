@@ -107,6 +107,9 @@ module CoursesHelper
 				time = time_place[0]
 				place = time_place[1]
 			end
+			if sec[:ccn].include?('SEE NOTE') or sec[:ccn].strip == ''
+				sec[:ccn] = "%05d" % lookup_ccn
+			end
 			sec[:time] = time
 			sec[:place] = place
 			info[name] = sec
@@ -126,19 +129,38 @@ module CoursesHelper
 
 		lectures = []
 		lec = []
-		sections.each do |name|
-			if not name.include?(' S ')
-				if lec.length > 0
+		last_lec = ''
+		lec_was_last = false
+		sections.reverse.each do |name|
+			if name.include?(' S ')
+				if lec_was_last
 					lectures << lec
+					lec = []
 				end
-				lec = [name]
-			else 
-				lec << name
+				lec.unshift(name)
+				lec_was_last = false
+				next
 			end
+			title = name.split[0...-3].join(' ')
+			if not lec_was_last
+				lec.unshift(name)
+				lec_was_last = true
+				last_lec = title
+				next
+			end
+			if title == last_lec and lec.length > 1
+				lec.unshift(name)
+			else
+				lectures << lec
+				lec = [name]
+			end
+			lec_was_last = true
+			last_lec = title
 		end
 		if lec.length > 0
 			lectures << lec
 		end
+		lectures.reverse!
 		
 		return lectures, info, class_url, course
 	end
