@@ -1,8 +1,8 @@
 .row
-	.span11.offset08
+	.span11.offset1
 		%center #{link_to @course, @url}
 
-- if @lectures[0][0] == []
+- if @lectures == []
 	.row
 		.span11.offset08
 			%p No classes match your request. 
@@ -10,23 +10,33 @@
 
 - else
 	- @lectures.each do |lecture|
-		- sections = lecture.pop
+		- lec = @info[lecture[0]]
 		.row
-			.span4.offset08
-				.dl{:class => 'dl-horizontal'}
-					- lecture.zip(@lec_titles).each do |field, desc|
-						%dt= desc
-						%dd= field
-			.span7
+			.span3.offset1
+				- title_words = lec[:course].split
+				%h4= title_words[0, title_words.length-3].join(' ')
+				%h5= lec[:title]
+				%p=  lec[:instructor]
+				%p=  'Units: ' + lec[:units]
+			.span8
 				%table
 					%tbody
 						%tr
-							- @sec_titles.each do |title|
-								%th= title
-						- sections.each do |section|
-							%tr
-								- section.each do |cell|
-									%td= cell
+							%th= 'Section'
+							%th= 'Time'
+							%th= 'Location'
+							%th= 'CCN'
+							%th= 'Enrolled'
+							%th= 'Waitlist'
+							- lecture.each do |section|
+								- sec = @info[section]
+								%tr
+									%td= sec[:course].split[-2,2].join(' ')
+									%td= sec[:time]
+									%td= sec[:place]
+									%td= sec[:ccn]
+									%td= sec[:enrolled]
+									%td= sec[:waitlist]
 		- if lecture != @lectures.last
 			.row
 				%hr

@@ -7,6 +7,6 @@ class CoursesController < ApplicationController
   end
 
   def results
-    @lectures, @lec_titles, @sec_titles, @url, @course = live_data(params)
+    @lectures, @info, @url, @course = live_data(params)
   end
 end
