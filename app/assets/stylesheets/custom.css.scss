@@ -1,10 +1,13 @@
 @import "bootstrap";
-@import url("http://fonts.googleapis.com/css?family=Quicksand");
+@import url("http://fonts.googleapis.com/css?family=Mouse+Memoirs");
+@import url("http://fonts.googleapis.com/css?family=Nunito");
+@import url("http://fonts.googleapis.com/css?family=Merienda");
+@import url("http://fonts.googleapis.com/css?family=Gafata");
 
 body {
-  background-color: #ffe187;
-  font-family: ‘Trebuchet MS’, Helvetica, sans-serif;
-  font-size: 0.9em;
+  background-color: #ffdd7f;
+  font-family: "Gafata";
+  font-size: 1.01em;
 }
 
 header {
@@ -22,13 +25,11 @@ table {
 }
 
 th, td {
-    overflow: hidden;
-    text-align: left;
-    padding-right: 20px;
+  overflow: hidden;
+  text-align: left;
 }
 
 table {
-  border-spacing:20;
   border-collapse:collapse;
   margin-top: 8px;
 }
@@ -39,7 +40,11 @@ hr {
 }
 
 h4 {
-  font-size: 1.2em;
+  font-size: 1.13em;
+}
+
+h5 {
+  font-style: italic;
 }
 
 center {
@@ -52,9 +57,8 @@ center {
 
 #logo {
   float: left;
-  font-size: 1.7em;
-  color: #0070ca;
-  letter-spacing: -1px;
+  font-size: 2.2em;
+  color: #0052d6;
   padding-top: 9px;
   font-weight: bold;
   line-height: 1;
@@ -62,6 +66,7 @@ center {
   width: -50%;
   margin-left: 100px;
   top: -7px;
+  font-family: "Mouse Memoirs";
   &:hover {
     color: #0099ee;
     text-decoration: none;
@@ -69,12 +74,28 @@ center {
 }
 
 #hometitle {
-  font-size: 1.8em;
+  font-size: 2.5em;
   font-weight: bold;
-  color: #006acc;
-  padding-bottom: 40px;
+  color: #0052d6;
+  padding-bottom: 35px;
   margin-left: 20px;
   float: center;
+  font-family: "Mouse Memoirs";
+}
+
+#slogan {
+  font-size: 0.65em;
+  font-weight: italic;
+  color: #08f;
+  padding-bottom: 20px;
+  margin-left: 20px;
+  float: center;
+  font-family: "Merienda";
+}
+
+#searchlink {
+  font-size: 2em;
+  font-style: bold;
 }
 
 .search {
@@ -94,21 +115,23 @@ a:link {
 }
 
 .section {
-  width: 30px;
+  width: 70px;
 }
 .time {
-  width: 100px;
+  width: 110px;
 }
 .place {
-  width: 130px;
+  width: 145px;
 }
 .ccn {
-  width: 45px;
+  width: 65px;
 }
 .enrolled {
-  width: 50px;
+  width: 70px;
 }
 .waitlist {
-  width: 50px;
+  width: 70px;
 }
-
+.closed {
+  color: #ba6;
+}

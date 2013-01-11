@@ -1,10 +1,10 @@
 .row
-	.span11.offset1
-		%center #{link_to @course, @url}
+	.span12
+		%center{:id => 'searchlink'} #{link_to @course, @url}
 
 - if @lectures == []
 	.row
-		.span11.offset08
+		.span11.offset1
 			%p No classes match your request. 
 			%p Please note that this is a Spring 2013 search. Click the link above for more details
 
@@ -23,14 +23,14 @@
 						%tr
 							%th= 'Section'
 							%th= 'Time'
-							%th= 'Place'
+							%th= 'Location'
 							%th= 'CCN'
 							%th= 'Enrolled'
 							%th= 'Waitlist'
 							- lecture.each do |section|
 								- sec = @info[section]
-								%tr
-									%td{:class => 'course'}= sec[:course].split[-2,2].join(' ')
+								%tr{:class => sec[:eopen] ? 'open' : 'closed'}
+									%td{:class => 'section'}= sec[:course].split[-2,2].join(' ')
 									%td{:class => 'time'}= sec[:time]
 									%td{:class => 'place'}= sec[:place]
 									%td{:class => 'ccn'}= sec[:ccn]

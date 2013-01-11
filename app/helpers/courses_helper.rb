@@ -16,6 +16,8 @@ module CoursesHelper
 		enrolled, limit, wait_list, wait_limit = nums
 		section_info[:enrolled] = (enrolled + '/' + limit)
 		section_info[:waitlist] = (wait_list + '/' + wait_limit)
+		section_info[:eopen] = enrolled != limit
+		section_info[:wopen] = wait_list != wait_limit
 	end
 
 
@@ -34,10 +36,15 @@ module CoursesHelper
     		if num.nil?
       			num = ''
     		end
+
+			args = params[:course].split
+			if args.length > 1 and args.last =~ /\d/
+				dept = args[0...-1].join(' ')
+				num = args.last
+			end
     		dept = dept.strip.upcase
    			num = num.strip.upcase
    			course = (dept + " " + num).strip
-
      		dept.gsub! /\s/, '+'
           	class_url = 'https://osoc.berkeley.edu/OSOC/osoc?y=0&p_term=SP&p_deptname=--+Choose+a+Department+Name+--&p_classif=--+Choose+a+Course+Classification+--&p_presuf=--+Choose+a+Course+Prefix%2fSuffix+--&p_course=' + num + '&p_dept=' + dept + '&x=0'
     	else
@@ -107,7 +114,7 @@ module CoursesHelper
 				time = time_place[0]
 				place = time_place[1]
 			end
-			if sec[:ccn].include?('SEE NOTE') or sec[:ccn].strip == ''
+			if sec[:ccn].include?('SEE NOTE') or sec[:ccn].strip == '' or sec[:ccn].include?('SEE DEPT')
 				sec[:ccn] = "%05d" % lookup_ccn
 			end
 			sec[:time] = time
@@ -127,6 +134,7 @@ module CoursesHelper
 		end
 		pool.shutdown
 
+		# group by lecture
 		lectures = []
 		lec = []
 		last_lec = ''
