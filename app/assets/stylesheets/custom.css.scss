@@ -1,13 +1,12 @@
 @import "bootstrap";
-@import url("http://fonts.googleapis.com/css?family=Mouse+Memoirs");
-@import url("http://fonts.googleapis.com/css?family=Nunito");
-@import url("http://fonts.googleapis.com/css?family=Merienda");
-@import url("http://fonts.googleapis.com/css?family=Gafata");
+@import url("http://fonts.googleapis.com/css?family=Quintessential");
+@import url("http://fonts.googleapis.com/css?family=Shadows+Into+Light");
+@import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro");
 
 body {
   background-color: #ffdd7f;
-  font-family: "Gafata";
-  font-size: 1.01em;
+  font-family: "Source Sans Pro";
+  font-size: 0.95em;
 }
 
 header {
@@ -40,7 +39,7 @@ hr {
 }
 
 h4 {
-  font-size: 1.13em;
+  font-size: 1.2em;
 }
 
 h5 {
@@ -48,16 +47,14 @@ h5 {
 }
 
 center {
-  text-align:center;
-  font-size: 2.2em;
+  text-align: center;
   margin-bottom: 30px;
   margin-top: 30px;
-  font-weight: bold;
 }
 
 #logo {
   float: left;
-  font-size: 2.2em;
+  font-size: 1.8em;
   color: #0052d6;
   padding-top: 9px;
   font-weight: bold;
@@ -66,7 +63,7 @@ center {
   width: -50%;
   margin-left: 100px;
   top: -7px;
-  font-family: "Mouse Memoirs";
+  font-family: ‘Trebuchet MS’, Helvetica, sans-serif;
   &:hover {
     color: #0099ee;
     text-decoration: none;
@@ -74,28 +71,27 @@ center {
 }
 
 #hometitle {
-  font-size: 2.5em;
+  font-size: 3.7em;
   font-weight: bold;
   color: #0052d6;
-  padding-bottom: 35px;
-  margin-left: 20px;
+  padding-bottom: 20px;
+  margin-left: 5px;
   float: center;
-  font-family: "Mouse Memoirs";
+  font-family: ‘Trebuchet MS’, Helvetica, sans-serif;
 }
 
 #slogan {
-  font-size: 0.65em;
-  font-weight: italic;
+  font-size: 1.5em;
   color: #08f;
   padding-bottom: 20px;
-  margin-left: 20px;
+  margin-left: 5px;
   float: center;
-  font-family: "Merienda";
+  font-family: ‘Trebuchet MS’, Helvetica, sans-serif;
 }
 
 #searchlink {
   font-size: 2em;
-  font-style: bold;
+  font-weight: 600;
 }
 
 .search {

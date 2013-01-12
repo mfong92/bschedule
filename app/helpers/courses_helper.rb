@@ -16,8 +16,7 @@ module CoursesHelper
 		enrolled, limit, wait_list, wait_limit = nums
 		section_info[:enrolled] = (enrolled + '/' + limit)
 		section_info[:waitlist] = (wait_list + '/' + wait_limit)
-		section_info[:eopen] = enrolled != limit
-		section_info[:wopen] = wait_list != wait_limit
+		section_info[:open] = enrolled < limit
 	end
 
 

@@ -21,21 +21,21 @@
 				%table
 					%tbody
 						%tr
-							%th= 'Section'
-							%th= 'Time'
-							%th= 'Location'
-							%th= 'CCN'
-							%th= 'Enrolled'
-							%th= 'Waitlist'
+							%th{:class => 'section'}= 'Section'
+							%th{:class => 'time'}= 'Time'
+							%th{:class => 'place'}= 'Location'
+							%th{:class => 'ccn'}= 'CCN'
+							%th{:class => 'enrolled'}= 'Enrolled'
+							%th{:class => 'waitlist'}= 'Waitlist'
 							- lecture.each do |section|
 								- sec = @info[section]
-								%tr{:class => sec[:eopen] ? 'open' : 'closed'}
-									%td{:class => 'section'}= sec[:course].split[-2,2].join(' ')
-									%td{:class => 'time'}= sec[:time]
-									%td{:class => 'place'}= sec[:place]
-									%td{:class => 'ccn'}= sec[:ccn]
-									%td{:class => 'enrolled'}= sec[:enrolled]
-									%td{:class => 'waitlist'}= sec[:waitlist]
+								%tr{:class => sec[:open] ? 'open' : 'closed'}
+									%td= sec[:course].split[-2,2].join(' ')
+									%td= sec[:time]
+									%td= sec[:place]
+									%td= sec[:ccn]
+									%td= sec[:enrolled]
+									%td= sec[:waitlist]
 		- if lecture != @lectures.last
 			.row
 				%hr
