@@ -4,7 +4,8 @@ module CoursesHelper
 		numbers = []
 		nums = []
 
-		doc = open('https://telebears.berkeley.edu/enrollment-osoc/osc?_InField1=RESTRIC&_InField2=' + ccn + '&_InField3=13B4')
+		codes = {'FL' => '12D2', 'SP' => '13B4', 'SU' => '13C1'}
+		doc = open('https://telebears.berkeley.edu/enrollment-osoc/osc?_InField1=RESTRIC&_InField2=' + ccn + '&_InField3=' + codes[params[:semester]])
 		doc.each_line do |line|
 			if line.include?('limit')
 				a = line.scan(Regexp.new(/([0-9]+)/))
@@ -13,10 +14,10 @@ module CoursesHelper
 		end
 
 		nums += ['0']*4
-		enrolled, limit, wait_list, wait_limit = nums
-		section_info[:enrolled] = (enrolled + '/' + limit)
-		section_info[:waitlist] = (wait_list + '/' + wait_limit)
-		section_info[:open] = enrolled < limit
+		enrolled, limit, wait_list, wait_limit = nums.collect {|x| x.strip}
+		section_info[:enrolled] = enrolled + '/' + limit
+		section_info[:waitlist] = wait_list + '/' + wait_limit
+		section_info[:open] = Integer(enrolled) < Integer(limit)
 	end
 
 
@@ -45,13 +46,13 @@ module CoursesHelper
    			num = num.strip.upcase
    			course = (dept + " " + num).strip
      		dept.gsub! /\s/, '+'
-          	class_url = 'https://osoc.berkeley.edu/OSOC/osoc?y=0&p_term=SP&p_deptname=--+Choose+a+Department+Name+--&p_classif=--+Choose+a+Course+Classification+--&p_presuf=--+Choose+a+Course+Prefix%2fSuffix+--&p_course=' + num + '&p_dept=' + dept + '&x=0'
+          	class_url = 'https://osoc.berkeley.edu/OSOC/osoc?y=0&p_term=' + params[:semester] + '&p_deptname=--+Choose+a+Department+Name+--&p_classif=--+Choose+a+Course+Classification+--&p_presuf=--+Choose+a+Course+Prefix%2fSuffix+--&p_course=' + num + '&p_dept=' + dept + '&x=0'
     	else
     		dept = params[:dept].strip.upcase
     		num = params[:course_num].strip.upcase
     	    course = (dept + " " + num).strip
     		params[:dept].gsub! /\s/, '+'
-    		class_url = 'http://osoc.berkeley.edu/OSOC/osoc?y=0&p_ccn=' + params[:ccn] + '&p_units=' + params[:units] + '&p_term=SP&p_bldg=' + params[:building] + '&p_exam=' + params[:final] + '&p_deptname=--+Choose+a+Department+Name+--&p_hour=' + params[:hours] + '&p_classif=--+Choose+a+Course+Classification+--&p_restr=' + params[:restrictions] + '&p_info=' + params[:additional] + '&p_presuf=--+Choose+a+Course+Prefix%2fSuffix+--&p_course=' + params[:course_num] + '&p_title=' + params[:course_title] +'&p_updt=' + params[:status] +'&p_day=' + params[:days] + '&p_instr=' + params[:instructor] + '&p_dept='  + params[:dept] + '&x=0'
+    		class_url = 'http://osoc.berkeley.edu/OSOC/osoc?y=0&p_ccn=' + params[:ccn].strip + '&p_units=' + params[:units].strip + '&p_term=' + params[:semester] + '&p_bldg=' + params[:building].strip + '&p_exam=' + params[:final].strip + '&p_deptname=--+Choose+a+Department+Name+--&p_hour=' + params[:hours].strip + '&p_classif=--+Choose+a+Course+Classification+--&p_restr=' + params[:restrictions].strip + '&p_info=' + params[:additional].strip + '&p_presuf=--+Choose+a+Course+Prefix%2fSuffix+--&p_course=' + params[:course_num].strip + '&p_title=' + params[:course_title].strip + '&p_updt=' + params[:status].strip + '&p_day=' + params[:days].strip + '&p_instr=' + params[:instructor].strip + '&p_dept='  + params[:dept].strip + '&x=0'
     	end
 
     	if dept == '' and num == ''
@@ -82,7 +83,8 @@ module CoursesHelper
 		# parse each section for relevant information
 		sections = []
 		info = {}
-		ccn_regex = Regexp.new(/input type="hidden" name="_InField2" value="([0-9]*)"/)
+		ccn_regex = Regexp.new(/name="_InField2" value="([0-9]*)"/)
+		sem_regex = Regexp.new(/name="_InField3" value="([0-9A-Z]*)/)
 		html_sections.each do |section_lines|
 			d = []
 			lookup_ccn = -1
@@ -169,7 +171,7 @@ module CoursesHelper
 		end
 		lectures.reverse!
 		
-		return lectures, info, class_url, course
+		return lectures, info, class_url, course, params[:semester]
 	end
 	
 end

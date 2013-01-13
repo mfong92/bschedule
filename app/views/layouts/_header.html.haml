@@ -1,0 +1,10 @@
+.container
+	.span12
+		#mynav{:class => current_page?(root_path) ? 'hidden' : ''}
+			#logo= link_to 'bSchedule', root_path
+
+			%form{:class => 'form-inline', :action => '/search', :method => 'get', :type => 'text', :id => 'quicksearch'}
+				%input{:name => 'course', :type => 'text', :placeholder => 'quick search...', :class => ['pull-right', 'search-query']}
+				%input{:name => 'semester', :value => @semester, :type => 'hidden'}
+
+			#advanced= link_to 'Advanced Search', advanced_path(:semester => @semester), :method => 'post'

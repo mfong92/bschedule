@@ -1,0 +1,30 @@
+:ruby
+	fields = [
+		['dept', 		'Department', 			'CHEM, POL SCI, MCELLBI'],
+		['course_num', 	'Course Number', 		'1A, H7A, 103, 160B, 25AC'],
+		['course_title','Course Title', 		'CALIF, DATABASE, ENVIRON'],
+		['instructor', 	'Instructor', 			'SMITH, GREEN'],
+		['final', 		'Final', 				'7, 22, NONE, TBA'],
+		['ccn', 		'CCN', 					'00507, 12345'],
+		['days', 		'Day(s) of the Week', 	'M, TuTh, MTWTF'],
+		['hours', 		'Hour(s)', 				'930-11, 10, 2-5'],
+		['building', 	'Building Name', 		'DWINELLE, GPB, NORTH GATE'],
+		['units', 		'Units/Credit', 		'2, .5, 1-10'],
+		['restrictions','Restrictions', 		'NONE, FR, GR'],
+		['additional', 	'Additional Info',		'SWIMMING, AMERICAN CULTURES'],
+		['status', 		'Status/Last Changed', 	'UPDATED, ADDED, CANCELLED']
+	]
+
+%br
+%form{:class => 'form-horizontal', :action => '/search', :method => 'get'}
+	- fields.each do |f|
+		.control-group
+			%label{:class => 'control-label'}= f[1]
+			.controls
+				%input{:name => f[0], :type => 'text', :value => '', :placeholder => f[2], :class => 'input-xlarge'}
+		%input{:name => 'semester', :type => 'hidden', :value => @semester}
+	.control-group
+		.controls
+			%button{:type => 'submit', :class => 'btn'} Search
+%br
+%br

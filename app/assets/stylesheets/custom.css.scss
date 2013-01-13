@@ -13,12 +13,6 @@ header {
   margin-top: 10px;
 }
 
-button {
-  height: 27px;
-  position: relative;
-  top: -5px;
-}
-
 table {
   margin-right: auto;
 }
@@ -46,29 +40,7 @@ h5 {
   font-style: italic;
 }
 
-center {
-  text-align: center;
-  margin-bottom: 30px;
-  margin-top: 30px;
-}
-
-#logo {
-  float: left;
-  font-size: 1.8em;
-  color: #0052d6;
-  padding-top: 9px;
-  font-weight: bold;
-  line-height: 1;
-  position: relative;
-  width: -50%;
-  margin-left: 100px;
-  top: -7px;
-  font-family: ‘Trebuchet MS’, Helvetica, sans-serif;
-  &:hover {
-    color: #0099ee;
-    text-decoration: none;
-  }
-}
+/* homepage */
 
 #hometitle {
   font-size: 3.7em;
@@ -92,10 +64,42 @@ center {
 #searchlink {
   font-size: 2em;
   font-weight: 600;
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 30px;
 }
 
-.search {
-  margin-right:100px;
+/* navigation */
+
+#mynav {
+  padding-top: 20px;
+}
+
+#logo {
+  float: left;
+  font-size: 1.8em;
+  font-weight: bold;
+  font-family: ‘Trebuchet MS’, Helvetica, sans-serif;
+  a:hover {
+    color: #0099ee;
+    text-decoration: none;
+  }
+}
+
+#advanced {
+  margin-left: 540px;
+  margin-top: 4px;
+}
+
+#quicksearch {
+  float: right;
+  margin-right: 40px;
+}
+
+/* random */
+
+#sem {
+  width: 86px;
 }
 
 .hidden {
@@ -105,11 +109,6 @@ center {
 a:link {
   color: #0099ee;
 }
-
-.center {
-  float: center;
-}
-
 .section {
   width: 70px;
 }

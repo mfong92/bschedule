@@ -4,9 +4,10 @@ class CoursesController < ApplicationController
   end
 
   def advanced
+  	@semester = params[:semester]
   end
 
-  def results
-    @lectures, @info, @url, @course = live_data(params)
+  def search
+    @lectures, @info, @url, @course, @semester = live_data(params)
   end
 end

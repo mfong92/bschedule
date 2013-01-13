@@ -1,12 +1,12 @@
 .row
 	.span12
-		#searchlink #{link_to @course, @url}
+		%center{:id => 'searchlink'} #{link_to @course, @url}
 
 - if @lectures == []
 	.row
 		.span11.offset1
 			%p No classes match your request. 
-			%p Click the link above for more details.
+			%p Please note that this is a Spring 2013 search. Click the link above for more details
 
 - else
 	- @lectures.each do |lecture|
