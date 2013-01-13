@@ -42,6 +42,12 @@ module CoursesHelper
 				dept = args[0...-1].join(' ')
 				num = args.last
 			end
+			if args.length == 1 and args[0].length > 1
+				if not args[0][1][/\d/].nil?
+					num = args[0]
+					dept = ''
+				end
+			end
     		dept = dept.strip.upcase
    			num = num.strip.upcase
    			course = (dept + " " + num).strip
