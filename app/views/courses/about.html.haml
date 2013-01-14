@@ -1,0 +1,22 @@
+.container
+	.span12
+		%br
+		%h2 About
+
+		%br
+		%h4 History
+		%p This site was created by Matthew Fong (BioE/EECS '14) and George Yiu (EECS '14). We were bored this winter break, so we decided to learn some web development. While thinking about ideas for a website, we remembered the frustration we have had with schedule.berkeley.edu. The interface was just terrible and we hated clicking through all those live enrollment links. In about a week's time, we got this site up and running, and we're very proud of it. Although the site is very basic (due to our limited experience), we hope you find it as useful as we do.
+
+		%br
+		%h4 The Site
+		%p Every time you make a search, we use the search form on schedule.berkeley.edu. We tried to make the search as simple as possible by only providing the most common search: department and class. We allow a more sophisticated search through the advanced search page, but we believe 95% of searches only use those two fields. The server will then parse the page returned by the Berkeley search and display all the information in a simple concise format, with enrollment and waitlist information fetched from each live enrollment link.
+
+		%br
+		%h4 Issues
+		%p The site often will not work late at night or on Sundays due to Berkeley server maintenance. If schedule.berkeley.edu is working fine (specifically, the live enrollment pages), but our site isn't, please contact us (see below).
+		%br
+		%p Because we fetch live information for every section that comes up in a search, general searches are very intensive on our server (up to 100 pages loaded), so response times may be slower. We make these requests concurrently to the Berkeley servers to try to speed it up a bit, but you may still need to wait a few seconds. On top of that, we are running on a single Heroku instance, so high traffic means long wait times. We will think about other options if this site becomes too popular, but for now, we prefer not to pay $35/month for another instance. Please don't kill our server! 
+
+		%br
+		%h4 Contact
+		%p If there are any issues with the website or if you have any feature requests, please email us at bschedulelive@gmail.com. We are really open to suggestions since we're still very new to web development and aren't particularly gifted in web design.

@@ -13,7 +13,6 @@
 	.span12
 		#mynav{:class => current_page?(root_path) ? 'hidden' : ''}
 			#logo= link_to 'bSchedule', root_path
-			%form.form-inline#quicksearch{:class => current_page?(advanced_path) ? 'hidden' : '', :action => '/search', :method => 'get', :type => 'text'}
+			%form.form-inline#quicksearch{:class => ('hidden' unless current_page?(search_path)), :action => '/search', :method => 'get', :type => 'text'}
 				%input.input-medium.pull-right.search-query{:name => 'course', :type => 'text', :placeholder => msg}
 				%input{:name => 'semester', :type => 'hidden', :value => @semester}
-

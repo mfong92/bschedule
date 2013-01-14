@@ -3,6 +3,7 @@ Website::Application.routes.draw do
 
   match '/search', to: 'courses#search'
   match '/advanced', to: 'courses#advanced'
+  match '/about', to: 'courses#about'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
