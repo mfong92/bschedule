@@ -66,8 +66,17 @@ module CoursesHelper
     	end
 
     	# fetch html for page
-		doc = open(class_url).read
-		
+		doc = open(class_url).read()
+
+		# fetch all result pages
+		row = 101
+		nextdoc = doc
+		while nextdoc.include?('see next results')
+			nextdoc = open(class_url + '&p_start_row=' + row.to_s()).read()
+			doc += nextdoc
+			row += 100
+		end
+
 		# split html lines into sections
 		html_sections = []
 		temp_lines = []
@@ -130,8 +139,16 @@ module CoursesHelper
 			sections << name
 		end
 
+		if sections.length > 60
+			num_threads = 60
+		elsif sections.length > 30
+			num_threads = 30
+		else
+			num_threads = 15
+		end
+
 		# fetch live data for each section
-		pool = Thread::Pool.new(30)
+		pool = Thread::Pool.new(num_threads)
 		stats = Hash.new
 		sections.each do |section|
 			lookup_ccn = info[section][:lookup_ccn]
