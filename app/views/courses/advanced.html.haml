@@ -16,15 +16,45 @@
 	]
 
 %br
-%form{:class => 'form-horizontal', :action => '/search', :method => 'get'}
+%br
+%form.form-horizontal{:action => '/search', :method => 'get'}
+	.control-group
+		%label.control-label Semester
+		.controls
+			%select{:name => 'semester'}
+				%option{:value => 'Fl'} Fall
+				%option{:value => 'SP', :selected => 'selected'} Spring
+				%option{:value => 'SU'} Summer
 	- fields.each do |f|
 		.control-group
-			%label{:class => 'control-label'}= f[1]
+			%label.control-label= f[1]
 			.controls
-				%input{:name => f[0], :type => 'text', :value => '', :placeholder => f[2], :class => 'input-xlarge'}
-		%input{:name => 'semester', :type => 'hidden', :value => @semester}
+				%input.input-xlarge{:name => f[0], :type => 'text', :value => '', :placeholder => f[2]}
 	.control-group
 		.controls
 			%button{:type => 'submit', :class => 'btn'} Search
 %br
 %br
+
+-#
+	.control-group
+		%label.control-label Course Classifications
+		.controls
+			%select{:name => p_classif}
+				%option{:value => 'L'} lower division (1-99)
+				%option{:value => 'U'} upper division (100-199)
+				%option{:value => 'G'} graduate (200-299)
+				%option{:value => 'P'} professional (300-399)
+				%option{:Value => 'M'} special study for masters
+				%option{:Value => 'D'} special study for doctoral
+				%option{:Value => 'O'} other
+	.control-group
+		%label.control-label Course Prefixes/Suffixes
+		.controls
+			%select{:name => 'p_presuf'}
+				%option{:value => 'C'} 
+				%option{:value => 'H'} 
+				%option{:value => 'N'} 
+				%option{:value => 'R'} 
+				%option{:value => 'W'} 
+				%option{:value => 'AC'} 

@@ -40,36 +40,11 @@ h5 {
   font-style: italic;
 }
 
-/* homepage */
-
-#hometitle {
-  font-size: 3.7em;
-  font-weight: bold;
-  color: #0052d6;
-  padding-bottom: 20px;
-  margin-left: 5px;
-  float: center;
-  font-family: ‘Trebuchet MS’, Helvetica, sans-serif;
+.hidden {
+  display: none;
 }
 
-#slogan {
-  font-size: 1.5em;
-  color: #08f;
-  padding-bottom: 20px;
-  margin-left: 5px;
-  float: center;
-  font-family: ‘Trebuchet MS’, Helvetica, sans-serif;
-}
-
-#searchlink {
-  font-size: 2em;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 30px;
-  margin-top: 30px;
-}
-
-/* navigation */
+/* ----- NAVIGATION ----- */
 
 #mynav {
   padding-top: 20px;
@@ -96,30 +71,59 @@ h5 {
   margin-right: 40px;
 }
 
-/* random */
+/* ----- HOMEPAGE ----- */
 
-#sem {
+#hometitle {
+  font-size: 3.7em;
+  font-weight: bold;
+  color: #0052d6;
+  padding-top: 200px;
+  padding-bottom: 20px;
+  margin-left: 5px;
+  float: center;
+  font-family: ‘Trebuchet MS’, Helvetica, sans-serif;
+}
+
+#slogan {
+  font-size: 1.5em;
+  color: #08f;
+  padding-bottom: 25px;
+  margin-left: 5px;
+  float: center;
+  font-family: ‘Trebuchet MS’, Helvetica, sans-serif;
+}
+
+#semester {
   width: 86px;
 }
 
-.hidden {
-  display: none;
+#advlink {
 }
 
-a:link {
-  color: #0099ee;
+/* ----- RESULTS ----- */
+
+#searchlink {
+  font-size: 1.7em;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  a:link {
+    color: #0099ee;
+  }
 }
+
 .section {
   width: 70px;
 }
 .time {
-  width: 110px;
+  width: 100px;
 }
 .place {
-  width: 145px;
+  width: 130px;
 }
 .ccn {
-  width: 65px;
+  width: 60px;
 }
 .enrolled {
   width: 70px;
