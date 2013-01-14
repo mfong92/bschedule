@@ -3,11 +3,12 @@
 	#slogan live enrollment
 %center
 	%form.form-horizontal.search-query#homesearch{:action => '/search', :method => 'get'}
-		%input.input-xlarge.input-append{:name => 'course', :type => 'text', :placeholder => 'ex: bio1al, chm eng 141, econ, 61a'}
+		%input.input-xlarge.input-append{:name => 'course', :type => 'text', :autofocus => "autofocus", :placeholder => 'ex: bio1al, chm eng 141, econ, 61a'}
 		%select#semester{:name => 'semester'}
 			%option{:value => 'FL'} fall
 			%option{:value => 'SP', :selected => 'selected'} spring
 			%option{:value => 'SU'} summer
+%br
 %center
 	%ul#homenav
 		%li= link_to "Advanced", advanced_path
