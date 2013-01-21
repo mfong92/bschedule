@@ -39,7 +39,7 @@
 							- lecture.each do |section|
 								- sec = @info[section]
 								%tr{:class => sec[:open] ? 'open' : 'closed'}
-									%td= sec[:course].split[-2,2].join(' ')
+									%td= link_to sec[:course].split[-2,2].join(' '), sec[:url]
 									%td= sec[:time]
 									%td= sec[:place]
 									%td= sec[:ccn]
