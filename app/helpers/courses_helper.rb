@@ -1,11 +1,132 @@
 module CoursesHelper
 
+	# build search url from search parameters
+	def build_url(params)
+		course = params[:course]
+
+		# parse standard search
+		if params[:course]
+			dept, num = '', ''
+			args = params[:course].split().collect() {|term| term.strip}
+
+			if args.length > 1
+				if args.last =~ /\d/
+					dept = args[0...-1].join(' ')
+					num = args.last
+				else
+					dept = args.join(' ')
+				end
+			elsif args.length == 1
+				index = args.first =~ /\d/
+				isnum = true if Float(args.first) rescue false
+				if index == 0 and args.first.length >= 4 and isnum
+					params[:ccn] = "%05d" % Integer(Float(args.first))
+
+				elsif index
+					if index == 1
+						num = args.first
+					else
+						dept = args.first[0...index]
+						num = args.first[index..-1]
+					end
+				else
+					dept = args.first
+				end
+			end
+
+			params[:dept] = dept
+			params[:course_num] = num
+		end
+
+		params[:dept].gsub! /\s/, '+'
+
+		ccn		= 'p_ccn=' 		+ params.fetch(:ccn, '').strip
+		units	= 'p_units=' 	+ params.fetch(:units, '').strip
+		term	= 'p_term=' 	+ params.fetch(:semester, '').strip
+		bldg	= 'p_bldg=' 	+ params.fetch(:building, '').strip
+		exam 	= 'p_exam=' 	+ params.fetch(:final, '').strip
+		deptname= 'p_deptname='	+ 'Choose+a+Department+Name+--'
+		hour 	= 'p_hour=' 	+ params.fetch(:hours, '').strip
+		classif = 'p_classif='	+ '--+Choose+a+Course+Classification+--'
+		restr 	= 'p_restr=' 	+ params.fetch(:restrictions, '').strip
+		info 	= 'p_info=' 	+ params.fetch(:additional, '').strip
+		presuf 	= 'p_presuf=' 	+ '--+Choose+a+Course+Prefix%2fSuffix+--'
+		course 	= 'p_course=' 	+ params.fetch(:course_num, '').strip
+		title 	= 'p_title=' 	+ params.fetch(:course_title, '').strip
+		updt 	= 'p_updt=' 	+ params.fetch(:status, '').strip
+		day 	= 'p_day=' 		+ params.fetch(:days, '').strip
+		instr 	= 'p_instr=' 	+ params.fetch(:instructor, '').strip
+		dept 	= 'p_dept='  	+ params.fetch(:dept, '').strip
+
+		fields = [ccn, units, term, bldg, exam, deptname, hour,
+				  classif, restr, info, presuf, course, title,
+				  updt, day, instr, dept]
+		url = 'https://osoc.berkeley.edu/OSOC/osoc?' + fields.join('&')
+
+		dept = params[:dept].strip().upcase()
+		num = params[:course_num].strip().upcase()
+		if dept == '' and num == ''
+			course = 'RESULTS'
+		else
+			course = (dept + " " + num).strip()
+		end
+
+		return url, course
+	end
+
+
+	# fetch html results from search
+	def get_search_html(url)
+		# fetch html for base page
+		doc = open(url).read()
+
+		# fetch next result pages
+		row = 101
+		nextdoc = doc
+		while nextdoc.include?('see next results')
+			nextdoc = open(url + '&p_start_row=' + row.to_s()).read()
+			doc += nextdoc
+			row += 100
+		end
+		return doc
+	end
+
+
+	# split html lines into sections
+	def group_lines(doc, partition_string)
+		partitions = []
+		group = []
+		doc.each_line do |line|
+			if line.include?(partition_string)
+				if not group.empty?
+					partitions << group
+					group = []
+				end
+				group << line
+			else
+				if not group.empty?
+					group << line
+				end
+			end
+		end
+		partitions << group
+		return partitions
+	end
+
+
+	# fetch live enrollment for a section
 	def schedule(ccn, section_info)
 		numbers = []
 		nums = []
 
 		codes = {'FL' => '12D2', 'SP' => '13B4', 'SU' => '13C1'}
-		doc = open('https://telebears.berkeley.edu/enrollment-osoc/osc?_InField1=RESTRIC&_InField2=' + ccn + '&_InField3=' + codes[params[:semester]])
+
+		base = 'https://telebears.berkeley.edu/enrollment-osoc/osc?_InField1=RESTRIC'
+		ccn = '&_InField2=' + ccn
+		sem = '&_InField3=' + codes[params[:semester]]
+		url = base + ccn + sem
+		doc = open(url).read()
+
 		doc.each_line do |line|
 			if line.include?('limit')
 				a = line.scan(Regexp.new(/([0-9]+)/))
@@ -18,82 +139,20 @@ module CoursesHelper
 		section_info[:enrolled] = enrolled + '/' + limit
 		section_info[:waitlist] = wait_list + '/' + wait_limit
 		section_info[:open] = Integer(enrolled) < Integer(limit)
+		section_info[:url] = url
 	end
 
 
+	# execute search
 	def live_data(params)
 		require 'thread/pool'
 		require 'open-uri'
 
-		# parse arguments 
-		course = ""
-		if params[:course]
-     		dept = (params[:course])[/^[^0-9]+/]
-          	num = (params[:course])[/\d+\w*/]
-          	if dept.nil?
-     			dept = ''
-    		end
-    		if num.nil?
-      			num = ''
-    		end
+		url, course = build_url(params)
+		html = get_search_html(url)
 
-			args = params[:course].split
-			if args.length > 1 and args.last =~ /\d/
-				dept = args[0...-1].join(' ')
-				num = args.last
-			end
-			if args.length == 1 and args[0].length > 1
-				if not args[0][1][/\d/].nil?
-					num = args[0]
-					dept = ''
-				end
-			end
-    		dept = dept.strip.upcase
-   			num = num.strip.upcase
-   			course = (dept + " " + num).strip
-     		dept.gsub! /\s/, '+'
-          	class_url = 'https://osoc.berkeley.edu/OSOC/osoc?y=0&p_term=' + params[:semester] + '&p_deptname=--+Choose+a+Department+Name+--&p_classif=--+Choose+a+Course+Classification+--&p_presuf=--+Choose+a+Course+Prefix%2fSuffix+--&p_course=' + num + '&p_dept=' + dept + '&x=0'
-    	else
-    		dept = params[:dept].strip.upcase
-    		num = params[:course_num].strip.upcase
-    	    course = (dept + " " + num).strip
-    		params[:dept].gsub! /\s/, '+'
-    		class_url = 'http://osoc.berkeley.edu/OSOC/osoc?y=0&p_ccn=' + params[:ccn].strip + '&p_units=' + params[:units].strip + '&p_term=' + params[:semester] + '&p_bldg=' + params[:building].strip + '&p_exam=' + params[:final].strip + '&p_deptname=--+Choose+a+Department+Name+--&p_hour=' + params[:hours].strip + '&p_classif=--+Choose+a+Course+Classification+--&p_restr=' + params[:restrictions].strip + '&p_info=' + params[:additional].strip + '&p_presuf=--+Choose+a+Course+Prefix%2fSuffix+--&p_course=' + params[:course_num].strip + '&p_title=' + params[:course_title].strip + '&p_updt=' + params[:status].strip + '&p_day=' + params[:days].strip + '&p_instr=' + params[:instructor].strip + '&p_dept='  + params[:dept].strip + '&x=0'
-    	end
-
-    	if dept == '' and num == ''
-    		course = 'RESULTS'
-    	end
-
-    	# fetch html for page
-		doc = open(class_url).read()
-
-		# fetch all result pages
-		row = 101
-		nextdoc = doc
-		while nextdoc.include?('see next results')
-			nextdoc = open(class_url + '&p_start_row=' + row.to_s()).read()
-			doc += nextdoc
-			row += 100
-		end
-
-		# split html lines into sections
-		html_sections = []
-		temp_lines = []
-		doc.each_line do |line|
-			if line.include?('<TABLE BORDER=0 CELLSPACING=2 CELLPADDING=0>')
-				if not temp_lines.empty?
-					html_sections << temp_lines
-					temp_lines = []
-				end
-				temp_lines << line
-			else
-				if not temp_lines.empty?
-					temp_lines << line
-				end
-			end
-		end
-		html_sections << temp_lines
+		partition_string = '<TABLE BORDER=0 CELLSPACING=2 CELLPADDING=0>'
+		html_sections = group_lines(html, partition_string)
 		
 		# parse each section for relevant information
 		sections = []
@@ -128,7 +187,7 @@ module CoursesHelper
 			else
 				time_place = sec[:location].split(',')*2
 				time = time_place[0]
-				place = time_place[1]
+				place = time_place[1].split('(')[0].strip
 			end
 			if sec[:ccn].include?('SEE NOTE') or sec[:ccn].strip == '' or sec[:ccn].include?('SEE DEPT')
 				sec[:ccn] = "%05d" % lookup_ccn
@@ -194,7 +253,7 @@ module CoursesHelper
 		end
 		lectures.reverse!
 		
-		return lectures, info, class_url, course, params[:semester]
+		return lectures, info, url, course, params[:semester]
 	end
 	
 end
