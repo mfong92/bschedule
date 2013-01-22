@@ -1,19 +1,19 @@
 :ruby
-	if @semester.nil?
-		msg = 'quick search...'
-	elsif @semester == 'FL'
-		msg = 'Search fall...'
-	elsif @semester == 'SP'
-		msg = 'Search spring...'
-	else
-		msg = 'Search summer...'
-	end
+  if @semester.nil?
+    msg = 'quick search...'
+  elsif @semester == 'FL'
+    msg = 'Search fall...'
+  elsif @semester == 'SP'
+    msg = 'Search spring...'
+  else
+    msg = 'Search summer...'
+  end
 
 .container
-	.row
-		.span12
-			#mynav{:class => current_page?(root_path) ? 'hidden' : ''}
-				#logo= link_to 'bSchedule', root_path
-				%form.form-inline#quicksearch{:class => ('hidden' unless current_page?(search_path)), :action => '/search', :method => 'get', :type => 'text'}
-					%input.input-medium.pull-right.search-query{:name => 'course', :type => 'text', :placeholder => msg}
-					%input{:name => 'semester', :type => 'hidden', :value => @semester}
+  .row
+    .span12
+      #mynav{:class => current_page?(root_path) ? 'hidden' : ''}
+        #logo= link_to 'bSchedule', root_path
+        %form.form-inline#quicksearch{:class => ('hidden' unless current_page?(search_path)), :action => '/search', :method => 'get', :type => 'text'}
+          %input.input-medium.pull-right.search-query{:name => 'course', :type => 'text', :placeholder => msg}
+          %input{:name => 'semester', :type => 'hidden', :value => @semester}

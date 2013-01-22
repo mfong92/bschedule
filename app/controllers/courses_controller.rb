@@ -4,7 +4,7 @@ class CoursesController < ApplicationController
   end
 
   def advanced
-  	@semester = params[:semester]
+    @semester = params[:semester]
   end
 
   def search

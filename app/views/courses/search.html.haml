@@ -1,53 +1,53 @@
 :ruby
-	if @semester == 'FL'
-		name = @course + ' (fall)'
-	elsif @semester == 'SP'
-		name = @course + ' (spring)'
-	else
-		name = @course + ' (summer)'
-	end
+  if @semester == 'FL'
+    name = @course + ' (fall)'
+  elsif @semester == 'SP'
+    name = @course + ' (spring)'
+  else
+    name = @course + ' (summer)'
+  end
 
 .row
-	.span12
-		#searchlink #{link_to name, @url}
+  .span12
+    #searchlink #{link_to name, @url}
 
 - if @lectures == []
-	.row
-		.span11.offset1
-			%p No classes match your request. 
-			%p Click the link above for more details.
+  .row
+    .span11.offset1
+      %p No classes match your request. 
+      %p Click the link above for more details.
 
 - else
-	- @lectures.each do |lecture|
-		- lec = @info[lecture[0]]
-		.row
-			.span3.offset1
-				%h4= lec[:course].split[0...-3].join(' ')
-				%h5= lec[:title]
-				%p=  lec[:instructor]
-				%p=  'Units: ' + lec[:units]
-			.span8
-				%table
-					%tbody
-						%tr
-							%th.section Section
-							%th.time Time
-							%th.place Location
-							%th.ccn CCN
-							%th.enrolled Enrolled
-							%th.waitlist Waitlist
-							- lecture.each do |section|
-								- sec = @info[section]
-								%tr{:class => sec[:open] ? 'open' : 'closed'}
-									%td= link_to sec[:course].split[-2,2].join(' '), sec[:url]
-									%td= sec[:time]
-									%td= sec[:place]
-									%td= sec[:ccn]
-									%td= sec[:enrolled]
-									%td= sec[:waitlist]
-		- if lecture != @lectures.last
-			.row
-				%hr
-	%br
-	%br
-	%br
+  - @lectures.each do |lecture|
+    - lec = @info[lecture[0]]
+    .row
+      .span3.offset1
+        %h4= lec[:course].split[0...-3].join(' ')
+        %h5= lec[:title]
+        %p=  lec[:instructor]
+        %p=  'Units: ' + lec[:units]
+      .span8
+        %table
+          %tbody
+            %tr
+              %th.section Section
+              %th.time Time
+              %th.place Location
+              %th.ccn CCN
+              %th.enrolled Enrolled
+              %th.waitlist Waitlist
+              - lecture.each do |section|
+                - sec = @info[section]
+                %tr{:class => sec[:open] ? 'open' : 'closed'}
+                  %td= link_to sec[:course].split[-2,2].join(' '), sec[:url]
+                  %td= sec[:time]
+                  %td= sec[:place]
+                  %td= sec[:ccn]
+                  %td= sec[:enrolled]
+                  %td= sec[:waitlist]
+    - if lecture != @lectures.last
+      .row
+        %hr
+  %br
+  %br
+  %br

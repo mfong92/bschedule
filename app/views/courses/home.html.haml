@@ -1,15 +1,15 @@
 %center
-	#hometitle bSchedule
-	#slogan live enrollment
+  #hometitle bSchedule
+  #slogan live enrollment
 %center
-	%form.form-horizontal.search-query#homesearch{:action => '/search', :method => 'get'}
-		%input.input-xlarge.input-append{:name => 'course', :type => 'text', :autofocus => "autofocus", :placeholder => 'ex: cs162, chm eng 141, 1al, 08053'}
-		%select#semester{:name => 'semester'}
-			%option{:value => 'FL'} fall
-			%option{:value => 'SP', :selected => 'selected'} spring
-			%option{:value => 'SU'} summer
+  %form.form-horizontal.search-query#homesearch{:action => '/search', :method => 'get'}
+    %input.input-xlarge.input-append{:name => 'course', :type => 'text', :autofocus => "autofocus", :placeholder => 'ex: cs162, chm eng 141, 1al, 08053'}
+    %select#semester{:name => 'semester'}
+      %option{:value => 'FL'} fall
+      %option{:value => 'SP', :selected => 'selected'} spring
+      %option{:value => 'SU'} summer
 %br
 %center
-	%ul#homenav
-		%li= link_to "Advanced", advanced_path
-		%li= link_to "About", about_path
+  %ul#homenav
+    %li= link_to "Advanced", advanced_path
+    %li= link_to "About", about_path
