@@ -140,6 +140,13 @@ module CoursesHelper
     section_info[:waitlist] = wait_list + '/' + wait_limit
     section_info[:open] = Integer(enrolled) < Integer(limit)
     section_info[:url] = url
+
+    if doc.include?('Error')
+      section_info[:enrolled] = 'see link'
+      section_info[:waitlist] = 'N/A'
+      section_info[:open] = true
+    end
+
   end
 
 
