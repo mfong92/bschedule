@@ -1,4 +1,6 @@
 Website::Application.routes.draw do
+  get "users/new"
+
   root to: 'courses#home'
 
   match '/search', to: 'courses#search'
