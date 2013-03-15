@@ -5,8 +5,8 @@
   %form.form-horizontal.search-query#homesearch{:action => '/search', :method => 'get'}
     %input.input-xlarge.input-append{:name => 'course', :type => 'text', :autofocus => "autofocus", :placeholder => 'ex: cs162, chm eng 141, 1al, 08053'}
     %select#semester{:name => 'semester'}
-      %option{:value => 'FL'} fall
-      %option{:value => 'SP', :selected => 'selected'} spring
+      %option{:value => 'FL', :selected => 'selected'} fall
+      %option{:value => 'SP'} spring
       %option{:value => 'SU'} summer
 %br
 %center

@@ -119,7 +119,7 @@ module CoursesHelper
     numbers = []
     nums = []
 
-    codes = {'FL' => '12D2', 'SP' => '13B4', 'SU' => '13C1'}
+    codes = {'FL' => '13D2', 'SP' => '13B4', 'SU' => '13C1'}
 
     base = 'https://telebears.berkeley.edu/enrollment-osoc/osc?_InField1=RESTRIC'
     ccn = '&_InField2=' + ccn
@@ -160,7 +160,7 @@ module CoursesHelper
 
     partition_string = '<TABLE BORDER=0 CELLSPACING=2 CELLPADDING=0>'
     html_sections = group_lines(html, partition_string)
-    
+
     # parse each section for relevant information
     sections = []
     info = {}
@@ -184,9 +184,9 @@ module CoursesHelper
       end
       sec = Hash.new
       name = d[0]
-      sec = { course: name, title: d[1], location: d[2], 
-          instructor: d[3], status: d[4], ccn: d[5], units: d[6], 
-          final: d[7], restrictions:d[8], note: d[9], 
+      sec = { course: name, title: d[1], location: d[2],
+          instructor: d[3], status: d[4], ccn: d[5], units: d[6],
+          final: d[7], restrictions:d[8], note: d[9],
           enrollment: d[10], lookup_ccn: lookup_ccn }
       if sec[:location].include? 'UNSCHED'
         time = 'UNSCHED'
@@ -259,8 +259,8 @@ module CoursesHelper
       lectures << lec
     end
     lectures.reverse!
-    
+
     return lectures, info, url, course, params[:semester]
   end
-  
+
 end
