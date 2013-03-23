@@ -116,17 +116,15 @@ module CoursesHelper
 
   # fetch live enrollment for a section
   def schedule(ccn, section_info)
-    numbers = []
-    nums = []
-
     codes = {'FL' => '13D2', 'SP' => '13B4', 'SU' => '13C1'}
 
-    base = 'https://telebears.berkeley.edu/enrollment-osoc/osc?_InField1=RESTRIC'
-    ccn = '&_InField2=' + ccn
-    sem = '&_InField3=' + codes[params[:semester]]
-    url = base + ccn + sem
-    doc = open(url).read()
+    ur = URI.parse('https://telebears.berkeley.edu/enrollment-osoc/osc')
+    req = '_InField1=RESTRIC&_InField2=' + ccn.to_s + '&_InField3=' + codes[params[:semester]]
+    http = Net::HTTP.new(ur.host,ur.port)
+    http.use_ssl = true
+    doc = http.post(ur.path, req).body
 
+    nums = []
     doc.each_line do |line|
       if line.include?('limit')
         a = line.scan(Regexp.new(/([0-9]+)/))
@@ -154,6 +152,7 @@ module CoursesHelper
   def live_data(params)
     require 'thread/pool'
     require 'open-uri'
+    require 'net/http'
 
     url, course = build_url(params)
     html = get_search_html(url)
