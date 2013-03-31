@@ -123,6 +123,7 @@ module CoursesHelper
     http = Net::HTTP.new(ur.host,ur.port)
     http.use_ssl = true
     doc = http.post(ur.path, req).body
+    puts(doc)
 
     nums = []
     doc.each_line do |line|
