@@ -2,6 +2,7 @@ module CoursesHelper
 
   # build search url from search parameters
   def build_url(params)
+    puts(params)
     course = params[:course]
 
     # parse standard search
@@ -33,11 +34,12 @@ module CoursesHelper
           dept = args.first
         end
       end
-
+      puts(dept)
+      puts(num)
       params[:dept] = dept
       params[:course_num] = num
     end
-
+    puts(params)
     params[:dept].gsub! /\s/, '+'
 
     ccn     = 'p_ccn='      + params.fetch(:ccn, '').strip
@@ -116,16 +118,16 @@ module CoursesHelper
 
   # fetch live enrollment for a section
   def schedule(ccn, section_info)
-    codes = {'FL' => '13D2', 'SP' => '13B4', 'SU' => '13C1'}
+    codes = {'FL' => '14D2', 'SP' => '14B4', 'SU' => '14C1'}
 
     ur = URI.parse('https://telebears.berkeley.edu/enrollment-osoc/osc')
     req = '_InField1=RESTRIC&_InField2=' + ccn.to_s + '&_InField3=' + codes[params[:semester]]
     http = Net::HTTP.new(ur.host,ur.port)
     http.use_ssl = true
     doc = http.post(ur.path, req).body
-    puts('=================================================v')
-    puts(doc)
-    puts('=================================================^')
+    #puts('=================================================v')
+    #puts(doc)
+    #puts('=================================================^')
 
     nums = []
     doc.each_line do |line|
